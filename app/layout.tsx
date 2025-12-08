@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "./globals.css"
+import { SessionProviderFunction} from "./api/auth/ServerProvider"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import  {CardNav} from "./component/Navbar/Navbar"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,12 +26,76 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+ const items = [
+    {
+      label: "About",
+      bgColor: "#0D0716",
+      textColor: "#fff",
+      links: [
+        { label: "Company", ariaLabel: "About Company" },
+        { label: "Careers", ariaLabel: "About Careers" }
+      ]
+    },
+    {
+      label: "Booking Flights", 
+      bgColor: "#170D27",
+      textColor: "#fff",
+      links: [
+        { label: "Book Now !", ariaLabel: "Featured Projects" },
+        { label: "See Your Tickt", ariaLabel: "Project Case Studies" }
+      ]
+    },
+    {
+      label: "Contact",
+      bgColor: "#271E37", 
+      textColor: "#fff",
+      links: [
+        { label: "Email", ariaLabel: "Email us" },
+        { label: "Twitter", ariaLabel: "Twitter" },
+        { label: "LinkedIn", ariaLabel: "LinkedIn" }
+      ]
+    }
+  ];
+
+
   return (
+    
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <head>
+        <link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin=""/>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+  
+/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com"  crossOrigin=""/>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet"/>
+     
+     
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
+     </head>
+      <body style={{fontFamily:"Mulish"}} className="aurora-background">
+        <SessionProviderFunction>
+      <CardNav
+     
+     logoAlt="Company Logo"
+     items={items}
+     baseColor="#fff"
+     menuColor="#000"
+     buttonBgColor="#111"
+     buttonTextColor="#fff"
+     ease="power3.out"
+     />
+        
         {children}
+     </SessionProviderFunction>
       </body>
     </html>
   );

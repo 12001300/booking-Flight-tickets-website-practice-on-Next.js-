@@ -1,26 +1,130 @@
-@import "tailwindcss";
-
+/* Variables for easy color changes */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-1: #4a00e0; /* Deep Purple */
+  --color-2: #8e2de2; /* Lighter Purple */
+  --color-3: #ff00c1; /* Magenta */
+  --color-4: #ffa31a; /* Orange/Gold */
+  --color-5: #00ff73; /* Neon Green */
+  --background-color: #0d0d1c; /* Very dark blue-purple base */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.aurora-background {
+  /* Set the container to cover the viewport */
+  width: 100%;
+  min-height: 100vh;
+  /* Use the dark base color */
+  background-color: var(--background-color);
+  position: relative;
+  color: white;
+  overflow-x: hidden;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* The core of the effect: 
+  A layer of large, blurred, colored blobs created with radial-gradient
+*/
+.aurora-background::before {
+  content: '';
+  /* CRITICAL FIX: Use absolute positioning that stretches with content */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* This makes it stretch with the parent's full height */
+  width: 100%;
+  height: 100%;
+  
+  /* Create the layered, glowing blobs */
+  background: 
+    /* Blob 1: Top Left */
+    radial-gradient(circle at 10% 20%, var(--color-1) 0%, transparent 50%),
+    /* Blob 2: Middle Right */
+    radial-gradient(circle at 80% 60%, var(--color-3) 0%, transparent 60%),
+    /* Blob 3: Bottom Center */
+    radial-gradient(circle at 50% 90%, var(--color-5) 0%, transparent 70%),
+    /* Blob 4: Top Right */
+    radial-gradient(circle at 90% 5%, var(--color-4) 0%, transparent 60%),
+    /* Blob 5: Left Center */
+    radial-gradient(circle at 10% 50%, var(--color-2) 0%, transparent 55%);
+  
+  /* Blur the gradients heavily to make them look like soft light */
+  filter: blur(100px); 
+  
+  /* Add subtle movement */
+  animation: aurora-movement 10s infinite alternate;
+  
+  /* Ensure the dark base is visible underneath the light */
+  opacity: 0.6;
+  z-index: 0;
+  /* CRITICAL: Allow clicks to pass through to content below */
+  pointer-events: none;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.content-wrapper h1,
+.content-wrapper h2,
+.content-wrapper h3,
+.content-wrapper h4,
+.content-wrapper h5,
+.content-wrapper button,
+.content-wrapper p {
+  /* Use a subtle black or dark color shadow to give the text definition */
+  text-shadow: 
+    0 0 1px #000, 
+    0 0 2px rgba(0, 0, 0, 0.7); /* Adds depth and sharpens edges */
+}
+
+/* Keyframes for a subtle, shifting animation */
+@keyframes aurora-movement {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1) translate(-10%, 10%); /* Subtle zoom and shift */
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1) translate(10%, -5%);
+    opacity: 0.7;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.aurora-background-button {
+  position: relative;
+  overflow: hidden;
+
+  /* The core Aurora effect: layered radial gradients */
+  background-image:
+    radial-gradient(circle at 10% 20%, #4a00e0 0%, transparent 60%),
+    radial-gradient(circle at 80% 60%, #ff00c1 0%, transparent 70%),
+    radial-gradient(circle at 50% 90%, #00ff73 0%, transparent 80%),
+    radial-gradient(circle at 90% 5%, #ffa31a 0%, transparent 70%),
+    radial-gradient(circle at 10% 50%, #8e2de2 0%, transparent 65%);
+
+  /* Make the gradient much larger than the button to allow for movement */
+  background-size: 300% 300%; 
+  /* Initial position, usually centered */
+  background-position: 50% 50%; 
+  
+  /* Smooth transitions for the hover effect */
+  transition: background-position 0.6s ease;
+    
+  /* Ensure the text is readable and sharp against the glow */
+  color: white !important; /* Make sure text color is bright */
+  text-shadow: 0 0 1px #000, 0 0 2px rgba(0, 0, 0, 0.7);
+}
+
+.aurora-background-button:hover {
+  /* Shift the background to create a "moving" light effect */
+  background-position: 100% 100%;
+}
+
+/* Optional: To prevent the button's default background-color from showing */
+.card-nav-cta-button {
+  background-color: transparent !important;
 }
