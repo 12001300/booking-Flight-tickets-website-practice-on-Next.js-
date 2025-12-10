@@ -128,3 +128,30 @@
 .card-nav-cta-button {
   background-color: transparent !important;
 }
+.modern-select {
+    /* 1. Flat Look */
+    border: 1px solid #ccc; /* Lighter, subtle border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: none; /* Remove default focus/shadow */
+    background-color: #658eb7; /* Light background */
+    padding: 10px 15px; /* Increase padding */
+    transition: all 0.2s ease-in-out; /* Smooth transitions */
+
+    /* 2. Remove Ugly Arrow (Browser Default) - tricky with native select, but try */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* 3. Hover Effect */
+.modern-select:hover {
+    border-color: #1d2126; /* Highlight border on hover */
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* 4. Focus State */
+.modern-select:focus {
+    border-color: #007bff;
+    box-shadow: none /* Bootstrap's blue focus ring */
+}

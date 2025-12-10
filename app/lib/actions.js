@@ -10,10 +10,10 @@ export  const SearchForFlights=async(flightsData)=>{
     )
     if(availableFlights.length!=0){
 
-        console.log("this is the available flights : " , availableFlights)
+        return availableFlights
     }
     else{
-        console.log("there are no available flights like this ")
+       return {noTickets:"sorry but we don't have tickets for your flight"}
     }
 
 }

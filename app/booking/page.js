@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import LoginButton from "../component/LoginButton"
 import { SearchForFlights } from "../lib/actions"
+import TicketCard from "../component/TicketCard"
 export default function BookingPage() {
   const [TripType,setTripType]=useState("")
   const [flightsData,setFlightData]=useState({
@@ -17,7 +18,7 @@ export default function BookingPage() {
   const [departureplaces,setDepartureplaces]=useState(null)
   const [arrivalplaces,setarrivalplaces]=useState(null)
   const [loading,setLoading]=useState(true)
-  const [selectedTrip,setSelectedTrip]=useState({})
+  const [availableFlights,setavailableFlights]=useState([])
  useEffect(()=>{
   const fetchFlightData=async()=>{
     try{
@@ -48,11 +49,12 @@ export default function BookingPage() {
  const handleSubmit=async(e)=>{
 
   e.preventDefault()
-  setTimeout(()=>{setLoading(false)
-    SearchForFlights(flightsData)
+  setTimeout(async()=>{setLoading(false)
+    const availableFlights= await SearchForFlights(flightsData)
+    setavailableFlights(availableFlights)
   },3000)
   // console.log(flightsData)
-  
+ 
   setLoading(true)
  }
   
@@ -191,7 +193,7 @@ export default function BookingPage() {
     />
     </div>
     </div>
-   
+
         </div>
       }
       <div className="row d-flex justify-content-center">
@@ -202,9 +204,26 @@ export default function BookingPage() {
         </div>
 
       </div>
-        
+
       </div>
       </form>
+
+      {availableFlights.noTickets&&  <div className="alert alert-danger d-flex align-items-center" role="alert">
+  <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"></svg>
+  <div>
+   {availableFlights.noTickets}
+  </div>
+</div>
+
+
+}
+        {availableFlights.length!=0 && !availableFlights.noTickets ?
+        
+      <div className="row">
+          <TicketCard flightData={availableFlights}/>
+        </div>:""
+        
+      }
     </div>
   )
 }
