@@ -5,21 +5,23 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Link from "next/link"
 import { useState } from "react"
 import "../globals.css"
+import { relative } from 'path';
+import { Button } from 'react-bootstrap';
 export default function TicketCard({flightData}) {
     const [currency,setCurrency]=useState("USD")
   console.log(flightData)
     return (<>
     {flightData.map(flight=>(
-        <div key={flight.flight_id} className="card" style={{padding:0}}>
-   <div className="card-header d-flex row justify-content-between my-auto mx-0" width="100%">
-    <p className='col-sm-3'>{flight.fares[currency]} {currency}</p>
-   <div className="col-sm-3 text-center ">
+        <div key={flight.flight_id} className="card  bg-transparent" style={{padding:0 ,color:'white',boxShadow: "17px 10px 60px #a687a4"}}>
+   <div className="card-header d-flex row justify-content-around mx-0" width="100%">
+    <p className='col-2 my-auto'>{flight.fares[currency]} {currency}</p>
+   <div className="col-2 d-flex justify-content-end " >
         <DropdownButton 
-            
-            
+            // as={Button}
             id={`dropdown-button-drop-start`}
+            style={{ background:"transparent",border:"none" , }}
             drop="start"
-            variant="primary"
+            
             title={`Choose Currency`}
           >
              {Object.keys(flight.fares).map(curr=>(
@@ -53,7 +55,21 @@ export default function TicketCard({flightData}) {
     
   
   <div className="card-body">
-    <h5 className="card-title">Special title treatment</h5>
+    <div className='row'>
+      <div className='col-sm-5 text-center'>
+
+     <h5 className="card-title ">{flight.departure.airport}</h5>
+     <h6>{flight.departure.city}</h6>
+      </div>
+    <span className=' col-sm-2 text-center'><i className="bi bi-arrow-right d-block "></i></span>
+     <div className='col-sm-5 text-center'>
+
+     <h5 className="card-title ">{flight.arrival.airport}</h5>
+     <h6>{flight.arrival.city}</h6>
+      </div>
+
+
+    </div>
     <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
     <Link href="#" className="btn btn-primary">Go somewhere</Link>
   </div>
