@@ -14,13 +14,15 @@ export default function TicketCard({flightData}) {
     {flightData.map(flight=>(
         <div key={flight.flight_id} className="card  bg-transparent" style={{padding:0 ,color:'white',boxShadow: "17px 10px 60px #a687a4"}}>
    <div className="card-header d-flex row justify-content-around mx-0" width="100%">
-    <p className='col-2 my-auto'>{flight.fares[currency]} {currency}</p>
-   <div className="col-2 d-flex justify-content-end " >
+    <p className='col-4 my-auto'>{flight.fares[currency]} {currency}</p>
+            
+   <div className="col-6 d-flex justify-content-end " style={{ color:"white" , }}  >
         <DropdownButton 
             // as={Button}
             id={`dropdown-button-drop-start`}
-            style={{ background:"transparent",border:"none" , }}
+           variant='none'
             drop="start"
+          
             
             title={`Choose Currency`}
           >
@@ -56,13 +58,13 @@ export default function TicketCard({flightData}) {
   
   <div className="card-body">
     <div className='row'>
-      <div className='col-sm-5 text-center'>
+      <div className='col-5 text-center'>
 
      <h5 className="card-title ">{flight.departure.airport}</h5>
      <h6>{flight.departure.city}</h6>
       </div>
-    <span className=' col-sm-2 text-center'><i className="bi bi-arrow-right d-block "></i></span>
-     <div className='col-sm-5 text-center'>
+    <span className=' col-2 text-center'><i className="bi bi-arrow-right d-block "></i></span>
+     <div className='col-5 text-center'>
 
      <h5 className="card-title ">{flight.arrival.airport}</h5>
      <h6>{flight.arrival.city}</h6>
