@@ -52,10 +52,19 @@ export default function BookingPage() {
   setTimeout(async()=>{setLoading(false)
     const availableFlights= await SearchForFlights(flightsData)
     setavailableFlights(availableFlights)
+    setFlightData({
+        departureAirport: null,
+        arrivalAirport: null,
+        TripType: null,
+        TravelClass: null,
+        flight_Date: null,
+        return_flight_flight_date: null
+      })
+      setTripType("")
   },3000)
   // console.log(flightsData)
- 
   setLoading(true)
+ 
  }
   
   return (
@@ -70,10 +79,11 @@ export default function BookingPage() {
     name="from"
     className="form-control"
     placeholder="search or select"
+    value={flightsData.departureAirport || ""}
     onChange={(e)=>setFlightData((prev)=>({...prev,departureAirport:e.target.value}))}
 
     />
-    <datalist id="from"  >
+    <datalist  id="from"  >
       {
         loading?<option>loading .....</option> :departureplaces.map(departurePlace=>(
           <option key={departurePlace.airport} value={`${departurePlace.airport}`}>{departurePlace.airport},{departurePlace.city}</option>
@@ -95,9 +105,10 @@ export default function BookingPage() {
     name="to"
     className="form-control"
     placeholder="search or select"
+    value={flightsData.arrivalAirport || ""}
     onChange={(e)=>setFlightData((prev)=>({...prev,arrivalAirport:e.target.value}))}
     />
-    <datalist id="to"  >
+    <datalist   id="to"  >
       {
         loading?<option>loading .....</option> :arrivalplaces.map(ArrivalPlace=>(
           <option key={ArrivalPlace.airport} value={`${ArrivalPlace.airport}`}>{ArrivalPlace.airport},{ArrivalPlace.city}</option>
@@ -121,7 +132,7 @@ export default function BookingPage() {
     name="Trip-Type"
     className="form-control"
     placeholder="search or select"
-    value={TripType}
+    value={TripType || ""}
     onChange={(e)=>{setTripType(e.target.value)
       setFlightData((prev)=>({...prev,TripType:e.target.value}))
     }}
@@ -139,6 +150,7 @@ export default function BookingPage() {
     name="Travel-class"
     className="form-control"
     placeholder="search or select"
+    value={flightsData.TravelClass || ""}
     onChange={(e)=>setFlightData((prev)=>({...prev,TravelClass:e.target.value}))}
     />
     <datalist id="Travel-class"  >
@@ -156,6 +168,7 @@ export default function BookingPage() {
     list="Trip-Date"
     name="Trip-Date"
     className="form-control"
+    value={flightsData.flight_Date || ""}
     onChange={(e)=>setFlightData((prev)=>({...prev,flight_Date:e.target.value}))}
     type="date"
     
@@ -178,6 +191,7 @@ export default function BookingPage() {
     className="form-control col-sm-6"
     placeholder="Departure Date"
     type="date"
+    value={flightsData.flight_Date || ""}
     onChange={(e)=>setFlightData((prev)=>({...prev,flight_Date:e.target.value}))}
     />
     </div>
@@ -189,6 +203,7 @@ export default function BookingPage() {
     className="form-control col-sm-6"
     placeholder="Arrive Date"
     type="date"
+     value={flightsData.return_flight_date || ""}
     onChange={(e)=>setFlightData((prev)=>({...prev,return_flight_date:e.target.value}))}
     />
     </div>

@@ -19,8 +19,13 @@ export default function TicketCard({flightData}) {
    <div className="col-6 d-flex justify-content-end " style={{ color:"white" , }}  >
         <DropdownButton 
             // as={Button}
+
             id={`dropdown-button-drop-start`}
            variant='none'
+           border="none"
+           color='white'
+           bsPrefix='btn'
+
             drop="start"
           
             
@@ -72,8 +77,16 @@ export default function TicketCard({flightData}) {
 
 
     </div>
-    <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <Link href="#" className="btn btn-primary">Go somewhere</Link>
+    <div className='row'>
+
+    <p className="card-text col-5 text-center">{flight.departure.time}</p>
+    <p className='col-2'></p>
+    <p className="card-text col-5 text-center">{flight.arrival.time}</p>
+    </div>
+    <div className='row d-flex' style={{flexDirection:"row-reverse"}}>
+
+    <Link href="/booking/ticket-detailes" className="btn bg-transparent  col-3 mx-3 " style={{boxShadow:" 0px 0px 5px 3px"}}>more details</Link>
+    </div>
   </div>
 </div>
     ))}
